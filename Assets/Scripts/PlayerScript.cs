@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 [System.Serializable]
 public class Boundary
@@ -9,7 +8,6 @@ public class Boundary
 
 public class PlayerScript : MonoBehaviour
 {
-    public float lockRotation = 0;
     public float speed;
     public bool onUpperLayer;
     public Boundary boundary;
@@ -19,16 +17,26 @@ public class PlayerScript : MonoBehaviour
 
     public float fireRate = 0.5F;
     private float nextFire = 0.0F;
+
+    private Vector2 minScale;
+    private Vector2 maxScale;
+    private Vector2 newScale;
+    public float layerTransitionSpeed = 5;
     void Start()
     {
         speed = 8;
-        boundary.xMin = -5;
-        boundary.xMax = 5;
-        boundary.yMin = -8;
-        boundary.yMax = 8;
         onUpperLayer = true;
+        maxScale = GetComponent<Transform>().transform.localScale;
+        minScale = maxScale / 2;
+        newScale = maxScale;
     }
     void Update()
+    {
+        shootController();
+        movementController();
+        layerController();
+    }
+    void shootController()
     {
         if (Input.GetButton("Fire1") && Time.time > nextFire)
         {
@@ -36,30 +44,24 @@ public class PlayerScript : MonoBehaviour
             Instantiate(SingleShot, ShotSpawn.position, ShotSpawn.rotation);
         }
     }
-    void FixedUpdate()
+    void layerController() //Controls the pseudo Z axis layer system, changes player scale/speed
     {
-        movementController();
-        layerController();
-    }
-    void layerController()
-    {
-        Vector2 scale = GetComponent<Transform>().transform.localScale;
         if (Input.GetKeyDown(KeyCode.F) && onUpperLayer)
         {
-            GetComponent<Transform>().transform.localScale = scale / 2;
+            newScale = minScale;
             speed = 10;
             onUpperLayer = false;
         }
         else if (Input.GetKeyDown(KeyCode.R) && !onUpperLayer)
         {
-            GetComponent<Transform>().transform.localScale = scale * 2;
+            newScale = maxScale;
             speed = 8;
             onUpperLayer = true;
         }
+            transform.localScale = Vector2.Lerp(transform.localScale, newScale, Time.deltaTime * layerTransitionSpeed);
     }
-    void movementController()
+    void movementController() //Controls movement with WASD
     {
-        transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, lockRotation, lockRotation);
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
 
