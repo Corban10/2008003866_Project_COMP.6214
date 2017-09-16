@@ -53,6 +53,8 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\BackgroundScript.cs" />
      <Compile Include="Assets\Scripts\DestroyByBoundary.cs" />
+     <Compile Include="Assets\Scripts\LandMover.cs" />
+     <Compile Include="Assets\Scripts\LandSpawn.cs" />
      <Compile Include="Assets\Scripts\PlayerScript.cs" />
      <Compile Include="Assets\Scripts\ShootScript.cs" />
  <Reference Include="UnityEngine.UI">
