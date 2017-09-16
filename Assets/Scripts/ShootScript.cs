@@ -2,10 +2,13 @@
 
 public class ShootScript : MonoBehaviour {
 
-    public float speed;
+    public static float bulletSpeed; //static so that it can be accessed from other scripts
+    void Awake()
+    {
+        bulletSpeed = 15;
+    }
     void Start()
     {
-        speed = 12;
-        GetComponent<Rigidbody2D>().velocity = GetComponent<Rigidbody2D>().transform.up * speed;
+        GetComponent<Rigidbody2D>().velocity = GetComponent<Rigidbody2D>().transform.up * bulletSpeed;
     }
 }

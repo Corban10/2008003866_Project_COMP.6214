@@ -15,15 +15,17 @@ public class PlayerScript : MonoBehaviour
     public GameObject SingleShot;
     public Transform ShotSpawn;
 
-    public float fireRate = 0.5F;
-    private float nextFire = 0.0F;
+    public float fireRate;
+    private float nextFire;
 
-    private Vector2 minScale;
-    private Vector2 maxScale;
-    private Vector2 newScale;
-    public float layerTransitionSpeed = 5;
+    private Vector2 minScale, maxScale, newScale;
+
+    public float layerTransitionSpeed;
     void Start()
     {
+        fireRate = 0.1F;
+        nextFire = 0.0F;
+        layerTransitionSpeed = 5;
         speed = 8;
         onUpperLayer = true;
         maxScale = GetComponent<Transform>().transform.localScale;
@@ -49,24 +51,31 @@ public class PlayerScript : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F) && onUpperLayer)
         {
             newScale = minScale;
-            speed = 10;
+            speed = 8;
+            ShootScript.bulletSpeed = 15; // change variable from another script: bulletSpeed variable from ShootScript, maybe take this out later
             onUpperLayer = false;
         }
         else if (Input.GetKeyDown(KeyCode.R) && !onUpperLayer)
         {
             newScale = maxScale;
-            speed = 8;
+            speed = 10;
+            ShootScript.bulletSpeed = 20;
             onUpperLayer = true;
         }
-            transform.localScale = Vector2.Lerp(transform.localScale, newScale, Time.deltaTime * layerTransitionSpeed);
+            GetComponent<Rigidbody2D>().transform.localScale = Vector2.Lerp(transform.localScale, newScale, Time.deltaTime * layerTransitionSpeed);
+            boundaryClamper();
     }
-    void movementController() //Controls movement with WASD
+    void movementController()
     {
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
 
         Vector2 movement = new Vector2(moveHorizontal, moveVertical);
         GetComponent<Rigidbody2D>().velocity = movement * speed;
+        boundaryClamper();
+    }
+    void boundaryClamper()
+    {
         GetComponent<Rigidbody2D>().position = new Vector2
         (
             Mathf.Clamp(GetComponent<Rigidbody2D>().position.x, boundary.xMin, boundary.xMax),
