@@ -8,21 +8,21 @@ public class Boundary
 
 public class PlayerScript : MonoBehaviour
 {
-    public float speed;
-    public bool onUpperLayer;
     public Boundary boundary;
-
     public GameObject SingleShot;
     public Transform ShotSpawn;
+    public static int playerLives;
 
-    public float fireRate;
+    private float speed;
+    private float fireRate;
     private float nextFire;
-
     private Vector2 minScale, maxScale, newScale;
-
-    public float layerTransitionSpeed;
-    void Start()
+    private float layerTransitionSpeed;
+    private bool onUpperLayer;
+    
+    void Awake()
     {
+        playerLives = 3;
         fireRate = 0.1F;
         nextFire = 0.0F;
         layerTransitionSpeed = 5;
@@ -34,13 +34,17 @@ public class PlayerScript : MonoBehaviour
     }
     void Update()
     {
+        deathCheck();
         shootController();
-        movementController();
+    }
+    private void FixedUpdate()
+    {
         layerController();
+        movementController();
     }
     void shootController()
     {
-        if (Input.GetButton("Fire1") && Time.time > nextFire)
+        if (Time.time > nextFire) //Input.GetButton("Fire1") && Time.time > nextFire)
         {
             nextFire = Time.time + fireRate;
             Instantiate(SingleShot, ShotSpawn.position, ShotSpawn.rotation);
@@ -52,7 +56,8 @@ public class PlayerScript : MonoBehaviour
         {
             newScale = minScale;
             speed = 8;
-            ShootScript.bulletSpeed = 15; // change variable from another script: bulletSpeed variable from ShootScript, maybe take this out later
+            ShootScript.bulletSpeed = 15; 
+            // change variable from another script: bulletSpeed variable from ShootScript, maybe take this out later
             onUpperLayer = false;
         }
         else if (Input.GetKeyDown(KeyCode.R) && !onUpperLayer)
@@ -81,5 +86,12 @@ public class PlayerScript : MonoBehaviour
             Mathf.Clamp(GetComponent<Rigidbody2D>().position.x, boundary.xMin, boundary.xMax),
             Mathf.Clamp(GetComponent<Rigidbody2D>().position.y, boundary.yMin, boundary.yMax)
         );
+    }
+    void deathCheck() //maybe make this an event?
+    {
+        if (playerLives < 1)
+        {
+            Destroy(gameObject);
+        }
     }
 }
