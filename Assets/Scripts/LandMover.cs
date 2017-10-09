@@ -8,7 +8,7 @@ public class LandMover : MonoBehaviour
     public static float landSpeed; //static so that it can be accessed from other scripts
     void Awake()
     {
-        player = GameObject.Find("Player");
+        player = GameObject.Find("Player"); 
         landSpeed = -2.68f;
         GetComponent<Rigidbody2D>().velocity = GetComponent<Rigidbody2D>().transform.up * landSpeed;
     }
@@ -20,6 +20,10 @@ public class LandMover : MonoBehaviour
             PlayerScript.playerLives--;
             player.transform.position = new Vector2(0, -5);
             Debug.Log(PlayerScript.playerLives);
+            if (PlayerScript.playerLives < 1)
+            {
+                Destroy(player);
+            }
         }
     }
 }

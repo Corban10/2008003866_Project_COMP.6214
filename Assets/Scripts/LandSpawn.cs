@@ -15,34 +15,37 @@ public class LandSpawn : MonoBehaviour
     void Start()
     {
         //Instantiate(island, Spawn1.position, Spawn1.rotation);
-        StartCoroutine(Spawner());
+        StartCoroutine("Spawner");
     }
     IEnumerator Spawner()
     {
-        float spawnTimer = R.Next(10, 15);
-        switch (R.Next(1, 3))
+        while (true) //while loop instead of StartCoroutine(Spawner()); Maybe less memory use, and optional break;
         {
-            case 1:
-                Instantiate(island, Spawn1.position, Spawn1.rotation);
-                break;
-            case 2:
-                Instantiate(battleship, Spawn1.position, Spawn1.rotation);
-                break;
-        }
-        yield return new WaitForSeconds(spawnTimer);
-        
-        spawnTimer = R.Next(10, 15);
-        switch (R.Next(1, 3))
-        {
-            case 1:
-                Instantiate(island, Spawn2.position, Spawn2.rotation);
-                break;
-            case 2:
-                Instantiate(battleship, Spawn2.position, Spawn2.rotation);
-                break;
-        }
-        yield return new WaitForSeconds(spawnTimer);
+            float spawnTimer = R.Next(10, 15);
+            switch (R.Next(1, 3))
+            {
+                case 1:
+                    Instantiate(island, Spawn1.position, Spawn1.rotation);
+                    break;
+                case 2:
+                    Instantiate(battleship, Spawn1.position, Spawn1.rotation);
+                    break;
+            }
+            yield return new WaitForSeconds(spawnTimer);
 
-        StartCoroutine(Spawner());
+            spawnTimer = R.Next(10, 15);
+            switch (R.Next(1, 3))
+            {
+                case 1:
+                    Instantiate(island, Spawn2.position, Spawn2.rotation);
+                    break;
+                case 2:
+                    Instantiate(battleship, Spawn2.position, Spawn2.rotation);
+                    break;
+            }
+            yield return new WaitForSeconds(spawnTimer);
+        }
+
+        //StartCoroutine("Spawner");
     }
 }
