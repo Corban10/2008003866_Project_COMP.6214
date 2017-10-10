@@ -27,7 +27,6 @@ public class PlayerScript : MonoBehaviour
         playerCollider = GetComponent<CapsuleCollider2D>();
         playerLives = 3;
         fireRate = 0.1F;
-        nextFire = 0.0F;
         layerTransitionSpeed = 5;
         speed = 8;
         onUpperLayer = true;

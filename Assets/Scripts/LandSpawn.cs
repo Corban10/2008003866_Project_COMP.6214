@@ -14,10 +14,9 @@ public class LandSpawn : MonoBehaviour
     System.Random R = new System.Random();
     void Start()
     {
-        //Instantiate(island, Spawn1.position, Spawn1.rotation);
-        StartCoroutine("Spawner");
+        StartCoroutine("ObstacleSpawner");
     }
-    IEnumerator Spawner()
+    IEnumerator ObstacleSpawner()
     {
         while (true) //while loop instead of StartCoroutine(Spawner()); Maybe less memory use, and optional break;
         {
@@ -45,7 +44,12 @@ public class LandSpawn : MonoBehaviour
             }
             yield return new WaitForSeconds(spawnTimer);
         }
-
-        //StartCoroutine("Spawner");
+    }
+    IEnumerator EnemySpawner()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(5);
+        }
     }
 }
