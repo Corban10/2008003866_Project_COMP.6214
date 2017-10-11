@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BackgroundScript : MonoBehaviour {
 
-    public float Speed = 0.15f;
+    private float Speed = 0.1f;
     private Renderer _renderer;
     private void Start()
     {

@@ -9,7 +9,7 @@ public class Boundary
 
 public class PlayerScript : MonoBehaviour
 {
-    private CapsuleCollider2D playerCollider;
+    private PolygonCollider2D playerCollider;
     public Boundary boundary;
     public GameObject SingleShot;
     public Transform ShotSpawn;
@@ -24,14 +24,14 @@ public class PlayerScript : MonoBehaviour
     
     void Awake()
     {
-        playerCollider = GetComponent<CapsuleCollider2D>();
+        playerCollider = GetComponent<PolygonCollider2D>();
         playerLives = 3;
         fireRate = 0.1F;
         layerTransitionSpeed = 5;
-        speed = 8;
+        speed = 12;
         onUpperLayer = true;
         maxScale = GetComponent<Transform>().transform.localScale;
-        minScale = maxScale / 2;
+        minScale = maxScale / 1.75f;
         newScale = maxScale;
     }
     void Start()
@@ -80,7 +80,6 @@ public class PlayerScript : MonoBehaviour
             {
                 Physics2D.IgnoreCollision(GameObject.Find("Square(Clone)").GetComponent<BoxCollider2D>(), playerCollider, true);
             }
-
             if (onUpperLayer == false && GameObject.Find("Circle(Clone)"))
             {
                 Physics2D.IgnoreCollision(GameObject.Find("Circle(Clone)").GetComponent<CircleCollider2D>(), playerCollider, false);
@@ -90,7 +89,6 @@ public class PlayerScript : MonoBehaviour
                 Physics2D.IgnoreCollision(GameObject.Find("Square(Clone)").GetComponent<BoxCollider2D>(), playerCollider, false);
             }
             yield return new WaitForSeconds(0.5f);
-            Debug.Log("Repeat");
         }
         //StartCoroutine("LayerCheck");
     }

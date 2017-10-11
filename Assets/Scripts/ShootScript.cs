@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 public class ShootScript : MonoBehaviour {
-
+    public GameObject enemy;
     public static float bulletSpeed; //static so that it can be accessed from other scripts
     void Awake()
     {
@@ -11,4 +11,5 @@ public class ShootScript : MonoBehaviour {
     {
         GetComponent<Rigidbody2D>().velocity = GetComponent<Rigidbody2D>().transform.up * bulletSpeed;
     }
+    
 }

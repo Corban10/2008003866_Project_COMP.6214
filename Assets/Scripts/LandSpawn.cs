@@ -7,6 +7,7 @@ public class LandSpawn : MonoBehaviour
 {    
     public GameObject island;
     public GameObject battleship;
+    public GameObject enemy;
 
     public Transform Spawn1;
     public Transform Spawn2;
@@ -15,6 +16,7 @@ public class LandSpawn : MonoBehaviour
     void Start()
     {
         StartCoroutine("ObstacleSpawner");
+        StartCoroutine("EnemySpawner");
     }
     IEnumerator ObstacleSpawner()
     {
@@ -47,9 +49,26 @@ public class LandSpawn : MonoBehaviour
     }
     IEnumerator EnemySpawner()
     {
+        int difficulty = 10;
+        float spawnTimer = 0f;
+        Vector3 spacer = new Vector3(0, 10, 0);
         while (true)
         {
-            yield return new WaitForSeconds(5);
+            //left
+            spawnTimer = R.Next(difficulty, difficulty++);
+            spacer.x += R.Next(1, 5);
+            Instantiate(enemy, spacer, enemy.transform.rotation);
+            yield return new WaitForSeconds(spawnTimer);
+            //right
+            spawnTimer = R.Next(difficulty, difficulty++);
+            spacer.x -= R.Next(1, 5);
+            Instantiate(enemy, spacer, enemy.transform.rotation);
+            yield return new WaitForSeconds(spawnTimer);
+            //reset
+            if (difficulty > 1)
+            {
+                difficulty--;
+            }
         }
     }
 }

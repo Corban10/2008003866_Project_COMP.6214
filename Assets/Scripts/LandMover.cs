@@ -8,8 +8,9 @@ public class LandMover : MonoBehaviour
     public static float landSpeed; //static so that it can be accessed from other scripts
     void Awake()
     {
-        player = GameObject.Find("Player"); 
-        landSpeed = -2.68f;
+        player = GameObject.Find("Player");
+        //landSpeed = -2.68f;
+        landSpeed = -1.786666666666667f;
         GetComponent<Rigidbody2D>().velocity = GetComponent<Rigidbody2D>().transform.up * landSpeed;
     }
     private void OnTriggerEnter2D(Collider2D collision)
