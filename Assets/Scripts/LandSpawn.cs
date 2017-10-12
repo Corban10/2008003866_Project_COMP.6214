@@ -20,9 +20,10 @@ public class LandSpawn : MonoBehaviour
     }
     IEnumerator ObstacleSpawner()
     {
-        while (true) //while loop instead of StartCoroutine(Spawner()); Maybe less memory use, and optional break;
+        while (true)
         {
             float spawnTimer = R.Next(10, 15);
+            //left
             switch (R.Next(1, 3))
             {
                 case 1:
@@ -33,7 +34,7 @@ public class LandSpawn : MonoBehaviour
                     break;
             }
             yield return new WaitForSeconds(spawnTimer);
-
+            //right
             spawnTimer = R.Next(10, 15);
             switch (R.Next(1, 3))
             {
@@ -49,7 +50,7 @@ public class LandSpawn : MonoBehaviour
     }
     IEnumerator EnemySpawner()
     {
-        int difficulty = 10;
+        int difficulty = 5;
         float spawnTimer = 0f;
         Vector3 spacer = new Vector3(0, 10, 0);
         while (true)

@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyShootScript : MonoBehaviour
 {
     public GameObject player;
-    public static float bulletSpeed; //static so that it can be accessed from other scripts
+    private float bulletSpeed;
     void Awake()
     {
         player = GameObject.Find("Player");

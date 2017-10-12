@@ -5,7 +5,7 @@ using UnityEngine;
 public class LandMover : MonoBehaviour
 {
     public GameObject player;
-    public static float landSpeed; //static so that it can be accessed from other scripts
+    private float landSpeed;
     void Awake()
     {
         player = GameObject.Find("Player");

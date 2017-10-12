@@ -9,33 +9,36 @@ public class Boundary
 
 public class PlayerScript : MonoBehaviour
 {
+    #region Objects
     private PolygonCollider2D playerCollider;
     public Boundary boundary;
     public GameObject SingleShot;
     public Transform ShotSpawn;
-    public static int playerLives;
+    #endregion
 
+    #region Player Values
+    public static int playerLives;
     private float speed;
     private float fireRate;
     private float nextFire;
     private Vector2 minScale, maxScale, newScale;
     private float layerTransitionSpeed;
-    public bool onUpperLayer;
-    
+    public static bool onUpperLayer;
+    #endregion
+
     void Awake()
     {
+        #region Initializations
         playerCollider = GetComponent<PolygonCollider2D>();
         playerLives = 3;
-        fireRate = 0.1F;
+        fireRate = 0.15F;
         layerTransitionSpeed = 5;
         speed = 12;
         onUpperLayer = true;
         maxScale = GetComponent<Transform>().transform.localScale;
         minScale = maxScale / 1.75f;
         newScale = maxScale;
-    }
-    void Start()
-    {
+        #endregion
         StartCoroutine("LayerCheck");
     }
     void FixedUpdate()
@@ -72,17 +75,17 @@ public class PlayerScript : MonoBehaviour
     {
         while (true) //while loop instead of StartCoroutine(Spawner()); Maybe less memory use, and optional break;
         {
-            if (onUpperLayer && GameObject.Find("Circle(Clone)"))
+            if (onUpperLayer && GameObject.Find("island(Clone)"))
             {
-                Physics2D.IgnoreCollision(GameObject.Find("Circle(Clone)").GetComponent<CircleCollider2D>(), playerCollider, true);
+                Physics2D.IgnoreCollision(GameObject.Find("island(Clone)").GetComponent<PolygonCollider2D>(), playerCollider, true);
             }
             if (onUpperLayer && GameObject.Find("Square(Clone)"))
             {
-                Physics2D.IgnoreCollision(GameObject.Find("Square(Clone)").GetComponent<BoxCollider2D>(), playerCollider, true);
+                Physics2D.IgnoreCollision(GameObject.Find("Square(Clone)").GetComponent<BoxCollider2D>(), playerCollider, true); /*change collider as well*/
             }
-            if (onUpperLayer == false && GameObject.Find("Circle(Clone)"))
+            if (onUpperLayer == false && GameObject.Find("island(Clone)"))
             {
-                Physics2D.IgnoreCollision(GameObject.Find("Circle(Clone)").GetComponent<CircleCollider2D>(), playerCollider, false);
+                Physics2D.IgnoreCollision(GameObject.Find("island(Clone)").GetComponent<PolygonCollider2D>(), playerCollider, false);
             }
             if (onUpperLayer == false && GameObject.Find("Square(Clone)"))
             {

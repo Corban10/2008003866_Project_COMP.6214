@@ -5,7 +5,7 @@ public class ShootScript : MonoBehaviour {
     public static float bulletSpeed; //static so that it can be accessed from other scripts
     void Awake()
     {
-        bulletSpeed = 15;
+        bulletSpeed = 22;
     }
     void Start()
     {
