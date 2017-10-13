@@ -57,12 +57,14 @@ public class LandSpawn : MonoBehaviour
         {
             //left
             spawnTimer = R.Next(difficulty, difficulty++);
-            spacer.x += R.Next(1, 5);
+            spacer.x = 0;
+            spacer.x += R.Next(1, 4);
             Instantiate(enemy, spacer, enemy.transform.rotation);
             yield return new WaitForSeconds(spawnTimer);
             //right
             spawnTimer = R.Next(difficulty, difficulty++);
-            spacer.x -= R.Next(1, 5);
+            spacer.x = 0;
+            spacer.x -= R.Next(1, 4);
             Instantiate(enemy, spacer, enemy.transform.rotation);
             yield return new WaitForSeconds(spawnTimer);
             //reset
