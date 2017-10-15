@@ -79,17 +79,17 @@ public class PlayerScript : MonoBehaviour
             {
                 Physics2D.IgnoreCollision(GameObject.Find("island(Clone)").GetComponent<PolygonCollider2D>(), playerCollider, true);
             }
-            if (onUpperLayer && GameObject.Find("Square(Clone)"))
+            if (onUpperLayer && GameObject.Find("battleship(Clone)"))
             {
-                Physics2D.IgnoreCollision(GameObject.Find("Square(Clone)").GetComponent<BoxCollider2D>(), playerCollider, true); /*change collider as well*/
+                Physics2D.IgnoreCollision(GameObject.Find("battleship(Clone)").GetComponent<PolygonCollider2D>(), playerCollider, true); /*change collider as well*/
             }
             if (onUpperLayer == false && GameObject.Find("island(Clone)"))
             {
                 Physics2D.IgnoreCollision(GameObject.Find("island(Clone)").GetComponent<PolygonCollider2D>(), playerCollider, false);
             }
-            if (onUpperLayer == false && GameObject.Find("Square(Clone)"))
+            if (onUpperLayer == false && GameObject.Find("battleship(Clone)"))
             {
-                Physics2D.IgnoreCollision(GameObject.Find("Square(Clone)").GetComponent<BoxCollider2D>(), playerCollider, false);
+                Physics2D.IgnoreCollision(GameObject.Find("battleship(Clone)").GetComponent<PolygonCollider2D>(), playerCollider, false);
             }
             yield return new WaitForSeconds(0.5f);
         }

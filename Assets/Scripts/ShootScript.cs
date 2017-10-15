@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 
-public class ShootScript : MonoBehaviour {
-    public GameObject enemy;
-    public static float bulletSpeed; //static so that it can be accessed from other scripts
+public class ShootScript : MonoBehaviour 
+{
+    private float bulletSpeed;
     void Awake()
     {
-        bulletSpeed = 22;
+        bulletSpeed = 30;
     }
     void Start()
     {

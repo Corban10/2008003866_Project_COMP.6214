@@ -16,7 +16,6 @@ public class EnemyScript : MonoBehaviour
     #region States
     private float enemySpeed;
     private int enemyLives;
-    private float shootTimer;
     private float fireRate;
     private float nextFire;
     #endregion
@@ -36,13 +35,14 @@ public class EnemyScript : MonoBehaviour
         bulletRotation1.eulerAngles = new Vector3(0, 0, 170);
         bulletRotation2.eulerAngles = new Vector3(0, 0, -170);
         //enemy state
-        fireRate = 2f;
+        fireRate = 3f;
         enemySpeed = 2;
         enemyLives = 8;
         //movement logic
         enemy = GetComponent<Rigidbody2D>();
         R = new System.Random();
         StartCoroutine("EnemyMotion");
+        StartCoroutine("EnemyShoot");
     }
     IEnumerator EnemyMotion()
     {
@@ -55,18 +55,15 @@ public class EnemyScript : MonoBehaviour
             yield return new WaitForSeconds(1);
         }
     }
-    void Update()
+    IEnumerator EnemyShoot()
     {
-        shootController();
-    }
-    void shootController() //change this to coroutine?
-    {
-        if (Time.time > nextFire)
+        yield return new WaitForSeconds(1);
+        while(true)
         {
-            nextFire = Time.time + fireRate;
             Instantiate(EnemyShot, ShotSpawn.position - bulletOffset, bulletRotation1);
             Instantiate(EnemyShot, ShotSpawn.position, ShotSpawn.rotation);
             Instantiate(EnemyShot, ShotSpawn.position + bulletOffset, bulletRotation2);
+            yield return new WaitForSeconds(2);
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)

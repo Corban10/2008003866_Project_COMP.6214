@@ -22,6 +22,7 @@ public class LandSpawn : MonoBehaviour
     {
         while (true)
         {
+            yield return new WaitForSeconds(3); // tiny breather before starting wave 1
             float spawnTimer = R.Next(10, 15);
             //left
             switch (R.Next(1, 3))
@@ -50,9 +51,10 @@ public class LandSpawn : MonoBehaviour
     }
     IEnumerator EnemySpawner()
     {
+        yield return new WaitForSeconds(3); // tiny breather before starting wave 1
         int difficulty = 5;
         float spawnTimer = 0f;
-        Vector3 spacer = new Vector3(0, 10, 0);
+        Vector3 spacer = new Vector3(0, 11, 0);
         while (true)
         {
             //left
