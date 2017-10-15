@@ -49,7 +49,7 @@ public class PlayerScript : MonoBehaviour
     }
     void shootController()
     {
-        if (Time.time > nextFire) //Input.GetButton("Fire1") && Time.time > nextFire)
+        if (Time.time > nextFire && Input.GetButton("Fire1") && Time.time > nextFire)
         {
             nextFire = Time.time + fireRate;
             Instantiate(SingleShot, ShotSpawn.position - new Vector3(0.3f, 0, 0), ShotSpawn.rotation);
