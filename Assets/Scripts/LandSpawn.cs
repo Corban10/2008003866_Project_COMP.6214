@@ -4,14 +4,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class LandSpawn : MonoBehaviour
-{    
+{
     public GameObject island;
     public GameObject battleship;
     public GameObject enemy;
-
+    public GameObject turret;
     public Transform Spawn1;
     public Transform Spawn2;
     
+
     System.Random R = new System.Random();
     void Start()
     {
@@ -20,35 +21,39 @@ public class LandSpawn : MonoBehaviour
     }
     IEnumerator ObstacleSpawner()
     {
+        yield return new WaitForSeconds(3); // tiny breather before starting wave 1
         while (true)
         {
-            yield return new WaitForSeconds(3); // tiny breather before starting wave 1
-            float spawnTimer = R.Next(10, 15);
+            float spawnTimer = R.Next(10, 13);
             //left
-            switch (R.Next(1, 3))
-            {
-                case 1:
-                    Instantiate(island, Spawn1.position, Spawn1.rotation);
-                    break;
-                case 2:
-                    Instantiate(battleship, Spawn1.position, Spawn1.rotation);
-                    break;
-            }
+            InstantiateRandomLandObject(island, battleship, Spawn1, Spawn1, R.Next(1, 3));
             yield return new WaitForSeconds(spawnTimer);
+
             //right
-            spawnTimer = R.Next(10, 15);
-            switch (R.Next(1, 3))
-            {
-                case 1:
-                    Instantiate(island, Spawn2.position, Spawn2.rotation);
-                    break;
-                case 2:
-                    Instantiate(battleship, Spawn2.position, Spawn2.rotation);
-                    break;
-            }
+            InstantiateRandomLandObject(island, battleship, Spawn2, Spawn2, R.Next(1, 3));
+            //Instantiate();
             yield return new WaitForSeconds(spawnTimer);
         }
     }
+    void InstantiateRandomLandObject(GameObject gameObject1, GameObject gameObject2, Transform pos, Transform rot, int rNum)
+    {
+        switch (rNum)
+        {
+            case 1:
+                Instantiate(gameObject1, pos.position, rot.rotation);
+                break;
+            case 2:
+                Instantiate(gameObject2, pos.position, rot.rotation);
+                break;
+        }
+    }
+    /*void InstantiateTurrets()
+    {
+        if(GameObject.Find("battleship(Clone)"))
+        {
+            Instantiate()
+        }
+    }  */
     IEnumerator EnemySpawner()
     {
         yield return new WaitForSeconds(3); // tiny breather before starting wave 1

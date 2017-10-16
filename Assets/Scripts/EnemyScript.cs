@@ -37,7 +37,7 @@ public class EnemyScript : MonoBehaviour
         //enemy state
         fireRate = 3f;
         enemySpeed = 2;
-        enemyLives = 8;
+        enemyLives = 6;
         //movement logic
         enemy = GetComponent<Rigidbody2D>();
         R = new System.Random();

@@ -39,7 +39,7 @@ public class PlayerScript : MonoBehaviour
         minScale = maxScale / 1.75f;
         newScale = maxScale;
         #endregion
-        StartCoroutine("LayerCheck");
+        //StartCoroutine("LayerCheck");
     }
     void FixedUpdate()
     {
@@ -93,7 +93,7 @@ public class PlayerScript : MonoBehaviour
             }
             yield return new WaitForSeconds(0.5f);
         }
-        //StartCoroutine("LayerCheck");
+        //change to call from layer swap method
     }
     void movementController()
     {

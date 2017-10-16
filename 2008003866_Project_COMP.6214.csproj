@@ -86,6 +86,7 @@
     <Compile Include="Assets\Scripts\LandSpawn.cs" />
     <Compile Include="Assets\Scripts\PlayerScript.cs" />
     <Compile Include="Assets\Scripts\ShootScript.cs" />
+    <Compile Include="Assets\Scripts\TurretController.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
