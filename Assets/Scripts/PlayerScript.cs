@@ -39,7 +39,7 @@ public class PlayerScript : MonoBehaviour
         minScale = maxScale / 1.75f;
         newScale = maxScale;
         #endregion
-        //StartCoroutine("LayerCheck");
+        StartCoroutine("LayerCheck");
     }
     void FixedUpdate()
     {

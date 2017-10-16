@@ -26,7 +26,6 @@ public class EnemyShootScript : MonoBehaviour
             if (PlayerScript.playerLives < 1)
             {
                 Destroy(player);
-                
             }
             Destroy(gameObject);
         }

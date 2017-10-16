@@ -11,5 +11,4 @@ public class ShootScript : MonoBehaviour
     {
         GetComponent<Rigidbody2D>().velocity = GetComponent<Rigidbody2D>().transform.up * bulletSpeed;
     }
-    
 }

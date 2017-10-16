@@ -87,6 +87,7 @@ public class EnemyScript : MonoBehaviour
             {
                 Destroy(gameObject);
             }
+			Destroy(collision.gameObject);
         }
     }
 }
