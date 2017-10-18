@@ -36,10 +36,9 @@ public class PlayerScript : MonoBehaviour
         speed = 12;
         onUpperLayer = true;
         maxScale = GetComponent<Transform>().transform.localScale;
-        minScale = maxScale / 1.75f;
+        minScale = maxScale / 2;
         newScale = maxScale;
         #endregion
-        StartCoroutine("LayerCheck");
     }
     void FixedUpdate()
     {
@@ -70,30 +69,6 @@ public class PlayerScript : MonoBehaviour
         }
             GetComponent<Rigidbody2D>().transform.localScale = Vector2.Lerp(transform.localScale, newScale, Time.deltaTime * layerTransitionSpeed);
             boundaryClamper();
-    }
-    IEnumerator LayerCheck() //disable collider on land objects (2), add turrets to this later
-    {
-        while (true) //while loop instead of StartCoroutine(Spawner()); Maybe less memory use, and optional break;
-        {
-            if (onUpperLayer && GameObject.Find("island(Clone)"))
-            {
-                Physics2D.IgnoreCollision(GameObject.Find("island(Clone)").GetComponent<PolygonCollider2D>(), playerCollider, true);
-            }
-            if (onUpperLayer && GameObject.Find("battleship(Clone)"))
-            {
-                Physics2D.IgnoreCollision(GameObject.Find("battleship(Clone)").GetComponent<PolygonCollider2D>(), playerCollider, true); /*change collider as well*/
-            }
-            if (onUpperLayer == false && GameObject.Find("island(Clone)"))
-            {
-                Physics2D.IgnoreCollision(GameObject.Find("island(Clone)").GetComponent<PolygonCollider2D>(), playerCollider, false);
-            }
-            if (onUpperLayer == false && GameObject.Find("battleship(Clone)"))
-            {
-                Physics2D.IgnoreCollision(GameObject.Find("battleship(Clone)").GetComponent<PolygonCollider2D>(), playerCollider, false);
-            }
-            yield return new WaitForSeconds(0.5f);
-        }
-        //change to call from layer swap method
     }
     void movementController()
     {

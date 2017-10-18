@@ -15,6 +15,7 @@ public class TurretController : MonoBehaviour
     }
     void Update()
     {
+        transform.position = transform.parent.position;
         transform.up = (player.transform.position - transform.position) / 1.5f;
     }
     IEnumerator TurretShoot()
@@ -28,18 +29,8 @@ public class TurretController : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject == player)
-        {
-            PlayerScript.playerLives--;
-            player.transform.position = new Vector2(0, -5);
-            Debug.Log("Player lives: " + PlayerScript.playerLives);
-            if (PlayerScript.playerLives < 1)
-            {
-                Destroy(player);
-            }
-            Destroy(gameObject);
-        }
-        if (collision.name == "SingleShot(Clone)" && PlayerScript.onUpperLayer == true)
+        
+        if (collision.name == "SingleShot(Clone)" && PlayerScript.onUpperLayer == false)
         {
             Debug.Log("Enemy lives: " + turretLives);
             turretLives--;
@@ -47,6 +38,7 @@ public class TurretController : MonoBehaviour
             {
                 Destroy(gameObject);
             }
+            Destroy(collision.gameObject);
         }
     }
 }

@@ -31,7 +31,6 @@ public class LandSpawn : MonoBehaviour
 
             //right
             InstantiateRandomLandObject(island, battleship, Spawn2, Spawn2, R.Next(1, 3));
-            //Instantiate();
             yield return new WaitForSeconds(spawnTimer);
         }
     }
@@ -47,37 +46,32 @@ public class LandSpawn : MonoBehaviour
                 break;
         }
     }
-    /*void InstantiateTurrets()
-    {
-        if(GameObject.Find("battleship(Clone)"))
-        {
-            Instantiate()
-        }
-    }  */
+
     IEnumerator EnemySpawner()
     {
         yield return new WaitForSeconds(3); // tiny breather before starting wave 1
-        int difficulty = 5;
+        int difficulty = 12;
         float spawnTimer = 0f;
         Vector3 spacer = new Vector3(0, 11, 0);
         while (true)
         {
             //left
-            spawnTimer = R.Next(difficulty, difficulty++);
+            spawnTimer = R.Next(difficulty, difficulty+1);
             spacer.x = 0;
             spacer.x += R.Next(1, 4);
             Instantiate(enemy, spacer, enemy.transform.rotation);
             yield return new WaitForSeconds(spawnTimer);
             //right
-            spawnTimer = R.Next(difficulty, difficulty++);
+            spawnTimer = R.Next(difficulty, difficulty+1);
             spacer.x = 0;
             spacer.x -= R.Next(1, 4);
             Instantiate(enemy, spacer, enemy.transform.rotation);
             yield return new WaitForSeconds(spawnTimer);
             //reset
-            if (difficulty > 1)
+            if (difficulty > 3)
             {
-                difficulty--;
+                difficulty--;   
+                Debug.Log(difficulty);
             }
         }
     }

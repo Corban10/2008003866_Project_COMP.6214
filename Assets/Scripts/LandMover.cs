@@ -15,7 +15,7 @@ public class LandMover : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject == player)
+        if (collision.gameObject == player && PlayerScript.onUpperLayer == false)
         {
             Debug.Log(collision);
             PlayerScript.playerLives--;

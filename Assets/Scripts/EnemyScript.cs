@@ -63,7 +63,7 @@ public class EnemyScript : MonoBehaviour
             Instantiate(EnemyShot, ShotSpawn.position - bulletOffset, bulletRotation1);
             Instantiate(EnemyShot, ShotSpawn.position, ShotSpawn.rotation);
             Instantiate(EnemyShot, ShotSpawn.position + bulletOffset, bulletRotation2);
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(2.5f);
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
