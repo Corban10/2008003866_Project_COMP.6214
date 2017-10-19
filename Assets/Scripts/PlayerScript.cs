@@ -1,5 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
 using System.Collections;
+using UnityEngine;
 
 [System.Serializable]
 public class Boundary
@@ -72,9 +73,8 @@ public class PlayerScript : MonoBehaviour
     }
     void movementController()
     {
-        float moveHorizontal = Input.GetAxis("Horizontal");
-        float moveVertical = Input.GetAxis("Vertical");
-
+        float moveHorizontal = (float)Math.Round(Input.GetAxis("Horizontal"), 2);
+        float moveVertical = (float)Math.Round(Input.GetAxis("Vertical"), 2);
         Vector2 movement = new Vector2(moveHorizontal, moveVertical);
         GetComponent<Rigidbody2D>().velocity = movement * speed;
         boundaryClamper();

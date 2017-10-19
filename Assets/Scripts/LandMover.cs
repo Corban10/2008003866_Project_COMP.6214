@@ -10,7 +10,7 @@ public class LandMover : MonoBehaviour
     {
         player = GameObject.Find("Player");
         //landSpeed = -2.68f;
-        landSpeed = -1.786666666666667f;
+        landSpeed = -1.786f;
         GetComponent<Rigidbody2D>().velocity = GetComponent<Rigidbody2D>().transform.up * landSpeed;
     }
     private void OnTriggerEnter2D(Collider2D collision)
