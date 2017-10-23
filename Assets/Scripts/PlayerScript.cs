@@ -87,4 +87,5 @@ public class PlayerScript : MonoBehaviour
             Mathf.Clamp(GetComponent<Rigidbody2D>().position.y, boundary.yMin, boundary.yMax)
         );
     }
+    
 }

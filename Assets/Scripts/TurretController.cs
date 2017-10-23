@@ -16,7 +16,10 @@ public class TurretController : MonoBehaviour
     void Update()
     {
         transform.position = transform.parent.position;
-        transform.up = (player.transform.position - transform.position) / 1.5f;
+        if (player != null)
+        {
+            transform.up = (player.transform.position - transform.position) / 1.5f;
+        }
     }
     IEnumerator TurretShoot()
     {
