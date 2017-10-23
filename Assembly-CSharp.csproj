@@ -57,6 +57,9 @@
      <Compile Include="Assets\Scripts\EnemyShootScript.cs" />
      <Compile Include="Assets\Scripts\LandMover.cs" />
      <Compile Include="Assets\Scripts\LandSpawn.cs" />
+     <Compile Include="Assets\Scripts\Menu\HighScoresButtons.cs" />
+     <Compile Include="Assets\Scripts\Menu\MainMenuButtons.cs" />
+     <Compile Include="Assets\Scripts\Menu\PauseMenuButtons.cs" />
      <Compile Include="Assets\Scripts\PlayerScript.cs" />
      <Compile Include="Assets\Scripts\ShootScript.cs" />
      <Compile Include="Assets\Scripts\TurretController.cs" />
