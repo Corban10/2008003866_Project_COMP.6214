@@ -6,11 +6,12 @@ public class EnemyShootScript : MonoBehaviour
 {
     public GameObject player;
     private float bulletSpeed;
-    private float checkTime;
+    public float checkTime;
     void Awake()
     {
         player = GameObject.Find("Player");
         bulletSpeed = 8;
+        checkTime = Time.realtimeSinceStartup;
     }
     void Start()
     {
@@ -18,14 +19,14 @@ public class EnemyShootScript : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject == player && Time.timeSinceLevelLoad > checkTime)
+        if (collision.gameObject == player && Time.time > checkTime)
         {
             Debug.Log(collision);
             PlayerScript.playerLives--;
             player.transform.position = new Vector2(0, -5);
-            checkTime = Time.timeSinceLevelLoad + 5;
-            Debug.Log("Time.time = " + Time.time);
+            Debug.Log("Time.realtimeSinceStartup = " + Time.realtimeSinceStartup);
             Debug.Log("checktime = " + checkTime);
+            checkTime = Time.realtimeSinceStartup + 2;
             Debug.Log(PlayerScript.playerLives);
             if (PlayerScript.playerLives < 1)
             {
