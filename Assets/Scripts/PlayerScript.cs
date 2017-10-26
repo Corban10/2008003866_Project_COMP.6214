@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 [System.Serializable]
 public class Boundary
@@ -11,26 +12,32 @@ public class Boundary
 public class PlayerScript : MonoBehaviour
 {
     #region Objects
-    private PolygonCollider2D playerCollider;
     public Boundary boundary;
     public GameObject SingleShot;
+    public GameObject EnemyShot;
+    public GameObject Land1;
+    public GameObject Land2;
+    public GameObject Enemy;
     public Transform ShotSpawn;
+    public Text scoreText;
+    public Text livesText;
     #endregion
 
     #region Player Values
     public static int playerLives;
+    public static bool onUpperLayer;
     private float speed;
     private float fireRate;
     private float nextFire;
     private Vector2 minScale, maxScale, newScale;
     private float layerTransitionSpeed;
-    public static bool onUpperLayer;
+    public static int score;
+    private static float deathBuffer;
     #endregion
 
     void Awake()
     {
         #region Initializations
-        playerCollider = GetComponent<PolygonCollider2D>();
         playerLives = 3;
         fireRate = 0.15F;
         layerTransitionSpeed = 5;
@@ -39,7 +46,12 @@ public class PlayerScript : MonoBehaviour
         maxScale = GetComponent<Transform>().transform.localScale;
         minScale = maxScale / 2;
         newScale = maxScale;
+        score = 0;
         #endregion
+    }
+    void Start()
+    {
+        StartCoroutine(UpdateText());
     }
     void FixedUpdate()
     {
@@ -49,7 +61,7 @@ public class PlayerScript : MonoBehaviour
     }
     void shootController()
     {
-        if (Time.time > nextFire && Input.GetButton("Fire1") && Time.time > nextFire)
+        if (Time.time > nextFire && Input.GetButton("Fire1"))
         {
             nextFire = Time.time + fireRate;
             Instantiate(SingleShot, ShotSpawn.position - new Vector3(0.3f, 0, 0), ShotSpawn.rotation);
@@ -87,5 +99,46 @@ public class PlayerScript : MonoBehaviour
             Mathf.Clamp(GetComponent<Rigidbody2D>().position.y, boundary.yMin, boundary.yMax)
         );
     }
-    
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (Time.time > deathBuffer)
+        {
+            if (collision.tag == EnemyShot.tag || collision.tag == Enemy.tag)
+            {
+                PlayerTookDamage(collision);
+                Destroy(collision.gameObject);
+            }
+        }
+        if (Time.time > deathBuffer && !onUpperLayer)
+        {
+            if (collision.tag == Land1.tag || collision.tag == Land2.tag)
+            {
+                PlayerTookDamage(collision);
+            }
+        }
+    }
+    void PlayerTookDamage(Collider2D collision)
+    {
+        playerLives--;
+        Debug.Log(playerLives);
+        transform.position = new Vector2(0, -5);
+        if (PlayerScript.playerLives < 1)
+            PlayerDied();
+        //Debug.Log(string.Format("{0} > {1} = {2}", Time.time, deathBuffer, Time.time > deathBuffer));
+        deathBuffer = Time.time + 1f;
+    }
+    void PlayerDied()
+    {
+        Destroy(gameObject);
+        //gameover and restart screen
+    }
+    IEnumerator UpdateText()
+    {
+        while (true)
+        {
+            scoreText.text = "Score: " + score.ToString();
+            livesText.text = "Lives: " + playerLives.ToString();
+            yield return new WaitForSeconds(0.2f);
+        }
+    }
 }

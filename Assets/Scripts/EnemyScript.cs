@@ -1,7 +1,5 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System;
 
 public class EnemyScript : MonoBehaviour
 {
@@ -68,24 +66,14 @@ public class EnemyScript : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject == player)
-        {
-            PlayerScript.playerLives--;
-            player.transform.position = new Vector2(0, -5);
-            Debug.Log("Player lives: " + PlayerScript.playerLives);
-            if (PlayerScript.playerLives < 1)
-            {
-                Destroy(player);
-            }
-            Destroy(gameObject);
-        }
         if (collision.name == "SingleShot(Clone)" && PlayerScript.onUpperLayer == true)
         {
-            Debug.Log("Enemy lives: " + enemyLives);
             enemyLives--;
+            //PlayerScript.UpdateText();
             if (enemyLives < 1)
             {
                 Destroy(gameObject);
+                PlayerScript.score += 200;
             }
 			Destroy(collision.gameObject);
         }

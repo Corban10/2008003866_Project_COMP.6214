@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class LandMover : MonoBehaviour
 {
@@ -12,19 +10,5 @@ public class LandMover : MonoBehaviour
         //landSpeed = -2.68f;
         landSpeed = -1.786f;
         GetComponent<Rigidbody2D>().velocity = GetComponent<Rigidbody2D>().transform.up * landSpeed;
-    }
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject == player && PlayerScript.onUpperLayer == false)
-        {
-            Debug.Log(collision);
-            PlayerScript.playerLives--;
-            player.transform.position = new Vector2(0, -5);
-            Debug.Log(PlayerScript.playerLives);
-            if (PlayerScript.playerLives < 1)
-            {
-                Destroy(player);
-            }
-        }
     }
 }

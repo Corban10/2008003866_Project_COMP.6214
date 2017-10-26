@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TurretController : MonoBehaviour
@@ -35,11 +34,12 @@ public class TurretController : MonoBehaviour
         
         if (collision.name == "SingleShot(Clone)" && PlayerScript.onUpperLayer == false)
         {
-            Debug.Log("Enemy lives: " + turretLives);
             turretLives--;
+            //PlayerScript.UpdateText();
             if (turretLives < 1)
             {
                 Destroy(gameObject);
+                PlayerScript.score += 100;
             }
             Destroy(collision.gameObject);
         }
