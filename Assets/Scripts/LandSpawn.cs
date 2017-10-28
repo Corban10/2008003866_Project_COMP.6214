@@ -8,7 +8,6 @@ public class LandSpawn : MonoBehaviour
     public GameObject island;
     public GameObject battleship;
     public GameObject enemy;
-    public GameObject turret;
     public Transform Spawn1;
     public Transform Spawn2;
     

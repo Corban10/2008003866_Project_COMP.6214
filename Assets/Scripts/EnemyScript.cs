@@ -1,21 +1,19 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class EnemyScript : MonoBehaviour
 {
     #region Objects
     public GameObject EnemyShot;
+    public GameObject Explosion;
     public Transform ShotSpawn;
-    private GameObject player;
     private Rigidbody2D enemy;
-    System.Random R;
     #endregion
 
     #region States
     private float enemySpeed;
     private int enemyLives;
-    private float fireRate;
-    private float nextFire;
     #endregion
 
     #region Vectors and Quarternions
@@ -26,19 +24,15 @@ public class EnemyScript : MonoBehaviour
 
     void Awake()
     {
-        //player object to find collision
-        player = GameObject.Find("Player");
         // bullet state
         bulletOffset = new Vector3(0.3f, 0, 0);
         bulletRotation1.eulerAngles = new Vector3(0, 0, 170);
         bulletRotation2.eulerAngles = new Vector3(0, 0, -170);
         //enemy state
-        fireRate = 3f;
         enemySpeed = 2;
         enemyLives = 6;
         //movement logic
         enemy = GetComponent<Rigidbody2D>();
-        R = new System.Random();
         StartCoroutine("EnemyMotion");
         StartCoroutine("EnemyShoot");
     }
@@ -64,14 +58,25 @@ public class EnemyScript : MonoBehaviour
             yield return new WaitForSeconds(2.5f);
         }
     }
+    IEnumerator FlashDamage(SpriteRenderer sr, int times) 
+    {
+        for (int i = 0; i < times; i++) 
+        {
+            sr.color = new Color (1f, 1f, 1f, 0.3f);
+            yield return new WaitForSeconds (.1f);
+            sr.color = Color.white;
+            yield return new WaitForSeconds (.1f);
+        }
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.name == "SingleShot(Clone)" && PlayerScript.onUpperLayer == true)
         {
             enemyLives--;
-            //PlayerScript.UpdateText();
+            StartCoroutine (FlashDamage(GetComponent<SpriteRenderer>(), 1));
             if (enemyLives < 1)
             {
+                Instantiate(Explosion, transform.position, transform.rotation);
                 Destroy(gameObject);
                 PlayerScript.score += 200;
             }

@@ -21,6 +21,8 @@ public class PlayerScript : MonoBehaviour
     public Transform ShotSpawn;
     public Text scoreText;
     public Text livesText;
+    public GameObject Explosion;
+    public Transform canvas;
     #endregion
 
     #region Player Values
@@ -47,11 +49,8 @@ public class PlayerScript : MonoBehaviour
         minScale = maxScale / 2;
         newScale = maxScale;
         score = 0;
-        #endregion
-    }
-    void Start()
-    {
         StartCoroutine(UpdateText());
+        #endregion
     }
     void FixedUpdate()
     {
@@ -68,7 +67,7 @@ public class PlayerScript : MonoBehaviour
             Instantiate(SingleShot, ShotSpawn.position - new Vector3(-0.3f, 0, 0), ShotSpawn.rotation);
         }
     }
-    void layerController() //Controls the pseudo Z axis layer system, changes player scale/speed
+    void layerController()
     {
         if (Input.GetKeyDown(KeyCode.F) && onUpperLayer)
         {
@@ -120,25 +119,42 @@ public class PlayerScript : MonoBehaviour
     void PlayerTookDamage(Collider2D collision)
     {
         playerLives--;
-        Debug.Log(playerLives);
-        transform.position = new Vector2(0, -5);
+        StartCoroutine (FlashDamage(GetComponent<SpriteRenderer>(), 3));
         if (PlayerScript.playerLives < 1)
             PlayerDied();
-        //Debug.Log(string.Format("{0} > {1} = {2}", Time.time, deathBuffer, Time.time > deathBuffer));
+        transform.position = new Vector2(0, -5);
         deathBuffer = Time.time + 1f;
     }
     void PlayerDied()
     {
-        Destroy(gameObject);
-        //gameover and restart screen
+        livesText.text = "Lives: " + PlayerScript.playerLives.ToString();
+        Instantiate(Explosion, transform.position, transform.rotation);
+        gameObject.SetActive(false);
+        //Time.timeScale = 0;
+        //canvas.gameObject.SetActive(canvas.gameObject.activeInHierarchy(true));
+        Respawn();
+    }
+    void Respawn()
+    {
+        
     }
     IEnumerator UpdateText()
     {
-        while (true)
+        while (PlayerScript.playerLives > 0)
         {
-            scoreText.text = "Score: " + score.ToString();
-            livesText.text = "Lives: " + playerLives.ToString();
+            scoreText.text = "Score: " + PlayerScript.score.ToString();
+            livesText.text = "Lives: " + PlayerScript.playerLives.ToString();
             yield return new WaitForSeconds(0.2f);
+        }
+    }
+    IEnumerator FlashDamage(SpriteRenderer sr, int times) 
+    {
+        for (int i = 0; i < times; i++) 
+        {
+            sr.color = new Color (1f, 1f, 1f, 0.3f); //Red, Green, Blue, Alpha/Transparency
+            yield return new WaitForSeconds (.1f);
+            sr.color = Color.white; //White is the default "color" for the sprite, if you're curious.
+            yield return new WaitForSeconds (.1f);
         }
     }
 }

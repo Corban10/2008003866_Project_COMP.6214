@@ -2,12 +2,9 @@
 
 public class EnemyShootScript : MonoBehaviour
 {
-    public GameObject player;
     private float bulletSpeed;
-    public static float deathBuffer;
     void Awake()
     {
-        player = GameObject.Find("Player");
         bulletSpeed = 8;
     }
     void Start()
