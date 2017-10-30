@@ -22,7 +22,6 @@ public class PlayerScript : MonoBehaviour
     public Text scoreText;
     public Text livesText;
     public GameObject Explosion;
-    public Transform canvas;
     #endregion
 
     #region Player Values
@@ -100,20 +99,14 @@ public class PlayerScript : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (Time.time > deathBuffer)
+        if (Time.time > deathBuffer && (collision.tag == EnemyShot.tag || collision.tag == Enemy.tag))
         {
-            if (collision.tag == EnemyShot.tag || collision.tag == Enemy.tag)
-            {
-                PlayerTookDamage(collision);
-                Destroy(collision.gameObject);
-            }
+            PlayerTookDamage(collision);
+            Destroy(collision.gameObject);
         }
-        if (Time.time > deathBuffer && !onUpperLayer)
+        if (Time.time > deathBuffer && !onUpperLayer && (collision.tag == Land1.tag || collision.tag == Land2.tag))
         {
-            if (collision.tag == Land1.tag || collision.tag == Land2.tag)
-            {
-                PlayerTookDamage(collision);
-            }
+            PlayerTookDamage(collision);
         }
     }
     void PlayerTookDamage(Collider2D collision)
@@ -128,17 +121,13 @@ public class PlayerScript : MonoBehaviour
     void PlayerDied()
     {
         livesText.text = "Lives: " + PlayerScript.playerLives.ToString();
+        GetComponent<WriteNewScore>().GetNewScore();
+        GetComponent<WriteNewScore>().UpdateScore();
         Instantiate(Explosion, transform.position, transform.rotation);
         gameObject.SetActive(false);
-        //Time.timeScale = 0;
-        //canvas.gameObject.SetActive(canvas.gameObject.activeInHierarchy(true));
-        Respawn();
+        //send score event
     }
-    void Respawn()
-    {
-        
-    }
-    IEnumerator UpdateText()
+    IEnumerator UpdateText() //convert to event
     {
         while (PlayerScript.playerLives > 0)
         {

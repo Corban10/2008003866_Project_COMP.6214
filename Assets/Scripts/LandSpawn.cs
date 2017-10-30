@@ -69,8 +69,7 @@ public class LandSpawn : MonoBehaviour
             //reset
             if (difficulty > 3)
             {
-                difficulty--;   
-                Debug.Log(difficulty);
+                difficulty--;
             }
         }
     }
