@@ -5,13 +5,15 @@ using System.IO;
 using System;
 public class HighScoresButtons : MonoBehaviour
 {
-    public int[] topTenScores = new int[10];
-	public Text hsText;
+    public int[] topTenScores = new int[10]; 
+    // store highscores in an array after reading from file
+	public Text hsText; //GUI text object
     void Start()
 	{
 		ReadHighScoresFromFile();
 		DisplayHighScores();
 	}
+    //this method reads from the highscores.txt file and stores it into the topTenScores array
     void ReadHighScoresFromFile()
     {
         try
@@ -30,7 +32,8 @@ public class HighScoresButtons : MonoBehaviour
             Debug.Log(e.Message);
         }
     }
-	public void DisplayHighScores() //to text ui element
+    //displays highscores to text ui element
+	public void DisplayHighScores() 
     {
 		hsText.text = "";
         for (int i = 0; i < topTenScores.Length; i++)

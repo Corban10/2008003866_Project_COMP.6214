@@ -27,33 +27,35 @@ public class TurretController : MonoBehaviour
         while (true)
         {
             Instantiate(EnemyShot, transform.position, transform.rotation);
-            yield return new WaitForSeconds(2);
+            //instantiate a single bullet for turrets
+            yield return new WaitForSeconds(2); //shoot every 2 seconds
         }
     }
     IEnumerator FlashDamage(SpriteRenderer sr, int times) 
     {
-        for (int i = 0; i < times; i++) 
+        for (int i = 0; i < times; i++) //flash N times
         {
-            sr.color = new Color (1f, 1f, 1f, 0.3f);
-            yield return new WaitForSeconds (.1f);
-            sr.color = Color.white;
+            sr.color = new Color (1f, 1f, 1f, 0.3f); //turns opacity down
+            yield return new WaitForSeconds (.1f); // flash every 0.1 seconds
+            sr.color = Color.white; //resets colour value
             yield return new WaitForSeconds (.1f);
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        
+        // if collision is SingleShot, and player is on the upper layer
         if (collision.name == "SingleShot(Clone)" && PlayerScript.onUpperLayer == false)
         {
-            turretLives--;
-            StartCoroutine (FlashDamage(GetComponent<SpriteRenderer>(), 1));
-            if (turretLives < 1)
+            turretLives--; // takes damage
+            StartCoroutine (FlashDamage(GetComponent<SpriteRenderer>(), 1)); // flash
+            if (turretLives < 1) 
+                // if lives less than 1, instantiate explosion and destroy gameobject
             {
                 Instantiate(Explosion, transform.position, transform.rotation);
                 Destroy(gameObject);
-                PlayerScript.score += 100;
+                PlayerScript.score += 100; //add points to score
             }
-            Destroy(collision.gameObject);
+            Destroy(collision.gameObject); //destroy bullet
         }
     }
 }

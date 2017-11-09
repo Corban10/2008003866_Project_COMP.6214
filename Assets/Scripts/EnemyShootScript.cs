@@ -9,6 +9,7 @@ public class EnemyShootScript : MonoBehaviour
     }
     void Start()
     {
+        //sets bullet into motion
         GetComponent<Rigidbody2D>().velocity = GetComponent<Rigidbody2D>().transform.up * bulletSpeed;
     }
 }

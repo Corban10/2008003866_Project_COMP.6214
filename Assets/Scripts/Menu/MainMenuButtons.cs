@@ -3,17 +3,15 @@ using UnityEngine;
 
 public class MainMenuButtons : MonoBehaviour 
 {
-	public void PlayGame()
+	public void PlayGame() //start new game
 	{
 		SceneManager.LoadScene("SceneOne", LoadSceneMode.Single);
-		//Application.LoadLevel(1);
 	}
-	public void HighScores()
+	public void HighScores() //show highscores
 	{
 		SceneManager.LoadScene("HighScores", LoadSceneMode.Single);
-		//Application.LoadLevel(1);
 	}
-	public void QuitGame()
+	public void QuitGame() //exit to desktop
 	{
 		Application.Quit();
 	}

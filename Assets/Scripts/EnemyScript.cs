@@ -38,24 +38,25 @@ public class EnemyScript : MonoBehaviour
     }
     IEnumerator EnemyMotion()
     {
-        enemy.velocity = transform.up * enemySpeed;
+        enemy.velocity = transform.up * enemySpeed; //sets motion downwards
         yield return new WaitForSeconds(1);
         while (true)
         {
-            enemy.velocity -= new Vector2(0, 0.1f) * enemySpeed;
+            enemy.velocity -= new Vector2(0, 0.1f) * enemySpeed; //resets x velocity
             enemy.velocity += new Vector2(-enemy.position.x * 0.25f, 0) * enemySpeed;
-            yield return new WaitForSeconds(1);
+            // adds x velocity towards the middle of screen
+            yield return new WaitForSeconds(1); //wait 1 second till next x motion change
         }
     }
-    IEnumerator EnemyShoot()
+    IEnumerator EnemyShoot() //instantiates 3 bullets with different rotations
     {
-        yield return new WaitForSeconds(1);
-        while(true)
-        {
+        yield return new WaitForSeconds(1); //1 second initial buffer
+        while(true) //infinite coroutine loop until game restart or enemy death.
+        { 
             Instantiate(EnemyShot, ShotSpawn.position - bulletOffset, bulletRotation1);
             Instantiate(EnemyShot, ShotSpawn.position, ShotSpawn.rotation);
             Instantiate(EnemyShot, ShotSpawn.position + bulletOffset, bulletRotation2);
-            yield return new WaitForSeconds(2.5f);
+            yield return new WaitForSeconds(2.5f); //every 2.5 seconds
         }
     }
     IEnumerator FlashDamage(SpriteRenderer sr, int times) 
